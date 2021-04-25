@@ -6,7 +6,7 @@ import ListItemDeleteAction from '../components/ListItemDeleteAction';
 import ListItemSeparator from '../components/LIstItemSeparator';
 import Screen from '../components/Screen';
 
-const initailMessages = [
+const initialMessages = [
    {
       id: 1,
       title: 'T1',
@@ -22,7 +22,8 @@ const initailMessages = [
 ];
 
 export default function MessagesScreen() {
-   const [messages, setMessages] = useState(initailMessages);
+   const [messages, setMessages] = useState(initialMessages);
+   const [refreshing, setRefreshing] = useState(false);
 
    const handleDelete = (message) => {
       setMessages(messages.filter((m) => m.id !== message.id));
@@ -41,12 +42,29 @@ export default function MessagesScreen() {
                   onPress={() => console.log()}
                   renderRightAction={() => (
                      <ListItemDeleteAction //
-                        onPress={handleDelete(item)}
+                        onPress={() => handleDelete(item)}
                      />
                   )}
                />
             )}
             ItemSeparatorComponent={ListItemSeparator}
+            refreshing={refreshing}
+            onRefresh={() =>
+               setMessages([
+                  {
+                     id: 2,
+                     title: 'T2',
+                     description: 'D2',
+                     image: require('../assets/mosh.jpg'),
+                  },
+                  {
+                     id: 3,
+                     title: 'T3',
+                     description: 'D3',
+                     image: require('../assets/mosh.jpg'),
+                  },
+               ])
+            }
          />
       </Screen>
    );
